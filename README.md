@@ -19,8 +19,8 @@ AI
 
 To play against the AI, click the "Add AI" button before starting the game. The AI implementation is in `ai-player.js`. The `onStateChange` method responds to the current game state and sends commands to the server to play its turn.
 
-
-
+Game messages
+-------------
 
 In state `waiting-for-players`, the game has not yet started.
 
