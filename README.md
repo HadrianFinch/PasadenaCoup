@@ -2,7 +2,7 @@ Pasadena Coup
 ------------
 
 THANKS TO THE ORIGIONAL VERSION OF THIS GAME BY Christopher Brown and Jackie Niebling!!
-
+---------------------------------------------------------------------------------------
 
 A clone of the card game Coup written in Node.js.
 
