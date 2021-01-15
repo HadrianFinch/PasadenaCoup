@@ -879,7 +879,7 @@ module.exports = function createGame(options) {
                 }
             }
             // Return the other roles to the deck.
-            deck = shuffle(deck.concat(unchosen));
+            deck.unshift(deck.concat(unchosen));
             addHistory('exchange', curTurnHistGroup(), '{%d} exchanged roles', playerIdx);
             nextTurn();
 
@@ -902,8 +902,8 @@ module.exports = function createGame(options) {
                 if (idx == null) {
                     throw new GameException('Target does not have the confessed role');
                 }
-                deck.push(state.state.confession);
-                deck = shuffle(deck);
+                deck.unshift(state.state.confession);
+                // deck = shuffle(deck);
                 target.influence[idx].role = deck.pop();
                 addHistory('interrogate', curTurnHistGroup(), '{%d} forced {%d} to exchange cards', playerIdx, state.state.target);
             }
@@ -1092,9 +1092,10 @@ module.exports = function createGame(options) {
                     oldRoles += ' and ';
                 }
                 oldRoles += role;
-                deck.push(role);
+                deck.unshift(role);
             }
             //deck = shuffle(deck);
+            
             for (let influenceIdx of proof) {
                 challengedPlayer.influence[influenceIdx].role = deck.pop();
             }
