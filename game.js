@@ -35,6 +35,7 @@ var INITIAL_CASH = 3;
 var INFLUENCES = 2;
 
 var epithets = fs.readFileSync(__dirname + '/epithets.txt', 'utf8').split(/\r?\n/);
+var rattleList = fs.readFileSync(__dirname + '/DeathRattles.txt', 'utf8').split(/\r?\n/);
 
 const actionMessages = {
     'assassinate': (idx, target) => `{${idx}} attempted to assassinate {${target}}`,
@@ -348,12 +349,12 @@ module.exports = function createGame(options) {
         game.emit('teardown');
     }
 
-    function afterPlayerDeath(playerIdx) {
+    function afterPlayerDeath(playerIdx, rattlePublished) {
         var playerIface = playerIfaces[playerIdx];
         if (playerIface) {
             gameStats.playerRank.unshift(playerIface.playerId);
         }
-        addHistory('player-died', nextAdhocHistGroup(), '{%d} suffered a humiliating defeat', playerIdx);
+        addHistory('player-died', nextAdhocHistGroup(), '{%d}', playerIdx, rattlePublished);
         checkFreeForAll();
         checkForGameEnd();
     }
@@ -1110,7 +1111,7 @@ module.exports = function createGame(options) {
 
                 endOfTurn = afterIncorrectChallenge();
 
-                afterPlayerDeath(playerIdx);
+                afterPlayerDeath(playerIdx, GenDeathRattle());
 
                 if (endOfTurn) {
                     nextTurn();
@@ -1152,7 +1153,7 @@ module.exports = function createGame(options) {
                 addHistory('successful-challenge', curTurnHistGroup(), '%s; {%d} lost a card.', message, challengedPlayerIdx);
 
                 if (challengedPlayer.influenceCount == 0) {
-                    afterPlayerDeath(challengedPlayerIdx);
+                    afterPlayerDeath(challengedPlayerIdx, GenDeathRattle());
                 }
 
                 endOfTurn = afterSuccessfulChallenge();
@@ -1199,7 +1200,7 @@ module.exports = function createGame(options) {
             if (target.influenceCount == 1) {
                 revealedRole = revealFirstInfluence(target);
                 addHistory('assassinate', curTurnHistGroup(), '%s; {%d} lost a card %s', message, actionState.target);
-                afterPlayerDeath(actionState.target);
+                afterPlayerDeath(actionState.target, GenDeathRattle());
             } else if (target.influenceCount > 1) {
                 setState({
                     name: stateNames.REVEAL_INFLUENCE,
@@ -1219,7 +1220,7 @@ module.exports = function createGame(options) {
             if (target.influenceCount <= 1) {
                 revealedRole = revealFirstInfluence(target);
                 addHistory('coup', curTurnHistGroup(), '%s, {%d} lost a card,', message, actionState.target);
-                afterPlayerDeath(actionState.target);
+                afterPlayerDeath(actionState.target, GenDeathRattle());
             } else {
                 setState({
                     name: stateNames.REVEAL_INFLUENCE,
@@ -1495,4 +1496,11 @@ module.exports = function createGame(options) {
 
 function GameException(message) {
     this.message = message;
+}
+
+
+function GenDeathRattle()
+{
+    // var rattle = rattleList[Math.floor(Math.random() * rattleList.length)];
+    return(rattleList[Math.floor(Math.random() * rattleList.length)]);
 }
