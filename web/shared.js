@@ -47,7 +47,7 @@
             roles: 'inquisitor',
             targeted: true
         },
-        'change-team': {
+        'change-your-team': {
             gameType: 'reformation',
             cost: 1
         },

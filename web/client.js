@@ -887,7 +887,7 @@ function actionNames() {
         'income',
         'foreign-aid',
         'coup',
-        'change-team',
+        'change-your-team',
         'convert',
         'embezzle'
     ];

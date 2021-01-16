@@ -1279,9 +1279,9 @@ module.exports = function createGame(options) {
                 confession: confession
             });
             return false; // Not yet end of turn
-        } else if (actionState.action == 'change-team') {
+        } else if (actionState.action == 'change-your-team') {
             playerState.team *= -1;
-            addHistory('change-team', curTurnHistGroup(), '{%d} changed to the %s team', playerIdx, getTeamName(playerState.team));
+            addHistory('change-your-team', curTurnHistGroup(), '{%d} changed to the %s team', playerIdx, getTeamName(playerState.team));
             state.treasuryReserve += 1;
             checkFreeForAll();
         } else if (actionState.action == 'convert') {

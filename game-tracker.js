@@ -172,7 +172,7 @@ GameTracker.prototype.encodeAction = function (action, target) {
     else if (action === 'income') {
         return (8+5) << 4;
     }
-    else if (action == 'change-team') {
+    else if (action == 'change-your-team') {
         return 6 << 4;
     }
     else if (action == 'convert') {
@@ -483,7 +483,7 @@ GameTracker.prototype.decodeActionEvent = function (actionCode) {
             action = 'income';
             break;
         case 6:
-            action = 'change-team';
+            action = 'change-your-team';
             break;
         case 7:
             action = 'convert';
