@@ -1199,7 +1199,7 @@ module.exports = function createGame(options) {
             target = state.players[actionState.target];
             if (target.influenceCount == 1) {
                 revealedRole = revealFirstInfluence(target);
-                addHistory('assassinate', curTurnHistGroup(), '%s; {%d} lost a card %s', message, actionState.target);
+                addHistory('assassinate', curTurnHistGroup(), '%s; {%d} lost a card', message, actionState.target);
                 afterPlayerDeath(actionState.target, GenDeathRattle());
             } else if (target.influenceCount > 1) {
                 setState({
