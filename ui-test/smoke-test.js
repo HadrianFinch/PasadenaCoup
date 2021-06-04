@@ -1,5 +1,5 @@
 // To run this test:
-// - Run the treason server on localhost:8080.
+// - Run the treason server on localhost:3271.
 // - Download Chrome webdriver and put it in the path.
 // - Download Selenium standalone server and start it.
 // - From the project root folder, run ./node_modules/.bin/mocha ui-test
@@ -20,7 +20,7 @@ describe('Smoke test', function () {
         client = webdriverio
             .remote(options)
             .init()
-            .url('http://localhost:8080');
+            .url('http://localhost:3271');
 
         return client;
     });

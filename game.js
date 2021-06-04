@@ -46,6 +46,7 @@ const actionMessages = {
     'embezzle': (idx, target, action, state) => `{${idx}} attempted to embezzle $${state.treasuryReserve}`
 }
 
+
 module.exports = function createGame(options) {
     options = options || {};
     var gameId = nextGameId++;
@@ -82,7 +83,7 @@ module.exports = function createGame(options) {
     var turnHistGroup = 1;
     var adhocHistGroup = 1;
 
-    var deck;
+    var deck = null;
     var _test_fixedDeck = false;
 
     var game = new EventEmitter();
@@ -98,6 +99,26 @@ module.exports = function createGame(options) {
     game._test_setDeck = _test_setDeck;
     game._test_setTreasuryReserve = _test_setTreasuryReserve;
     game._test_resetAllows = resetAllows;
+
+    function LogDeck()
+    {
+        if (deck != null)
+        {
+            if (deck.length <= 1)
+            {
+                deck = shuffle(deck);
+                console.log("Deck Shuffled!");
+            }
+            
+            console.log("deck length:");
+            console.log(deck.length);
+        }
+
+        console.log("deck cards");
+        console.log(deck);
+    }
+
+    LogDeck();
 
     //The game is created but relies on the creating player joining. If they fail to join after a few minutes, assume
     //they timed out and reap game.
@@ -347,6 +368,9 @@ module.exports = function createGame(options) {
             name: 'destroyed'
         });
         game.emit('teardown');
+
+        
+        LogDeck();
     }
 
     function afterPlayerDeath(playerIdx, rattlePublished) {
@@ -431,6 +455,8 @@ module.exports = function createGame(options) {
     }
 
     function getInfluence(playerState) {
+        LogDeck();
+
         var influence = [];
         for (var i = 0; i < playerState.influence.length; i++) {
             if (!playerState.influence[i].revealed) {
@@ -897,7 +923,8 @@ module.exports = function createGame(options) {
                 'interrogate',
                 curTurnHistGroup(),
                 format('{%d} saw your %s', playerIdx, state.state.confession));
-            if (command.forceExchange) {
+            if (command.forceExchange) 
+            {
                 var target = state.players[state.state.target];
                 var idx = indexOfInfluence(target, state.state.confession);
                 if (idx == null) {
@@ -907,15 +934,21 @@ module.exports = function createGame(options) {
                 // deck = shuffle(deck);
                 target.influence[idx].role = deck.pop();
                 addHistory('interrogate', curTurnHistGroup(), '{%d} forced {%d} to exchange cards', playerIdx, state.state.target);
+                addHistory('interrogate', curTurnHistGroup(), '{%d} forced {%d} to exchange cards', playerIdx, deck);
             }
-            else {
+            else 
+            {
                 addHistory('interrogate', curTurnHistGroup(), '{%d} allowed {%d} to keep the same card', playerIdx, state.state.target);
             }
             nextTurn();
 
-        } else {
+        } 
+        else 
+        {
             throw new GameException('Unknown command');
         }
+        
+        LogDeck();
 
         emitState();
     }

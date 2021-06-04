@@ -4,7 +4,7 @@
 Description=Treason Coup
 
 [Service]
-ExecStart=/home/treason/deploy/scripts/run-node /home/treason/deploy/server.js --port 8080
+ExecStart=/home/treason/deploy/scripts/run-node /home/treason/deploy/server.js --port 3271
 User=treason
 Restart=always
 

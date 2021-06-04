@@ -11,7 +11,7 @@ To run it, checkout the source code, install Node.js (version 6 or later), and r
     npm install 
     node server.js [--debug]
 
-Then open `http://localhost:8080` in one or more browser windows. For an explanation of how to play, see `web/rules.html`.
+Then open `http://localhost:3271` in one or more browser windows. For an explanation of how to play, see `web/rules.html`.
 
 
 AI

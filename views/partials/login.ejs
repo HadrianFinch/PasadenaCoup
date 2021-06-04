@@ -23,18 +23,12 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Rank</th>
-                        <th>Player</th>
-                        <th>Wins</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
                 <!-- ko foreach: rankings() -->
-                    <tr data-bind="css: $data.isPlayer ? 'success' : ''">
-                        <td data-bind="text: $data.rank"></td>
-                        <td data-bind="text: $data.playerName"></td>
-                        <td data-bind="text: $data.wins - $data.winsAI"></td>
-                    </tr>
+                    
                 <!-- /ko -->
                 </tbody>
             </table>
