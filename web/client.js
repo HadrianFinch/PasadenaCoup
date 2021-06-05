@@ -247,7 +247,7 @@ socket.on('state', function (data) {
         vm.weAllowed(false);
         vm.chosenExchangeOptions({});
         $('.activity').scrollTop(0);
-        $('.action-bar').effect('highlight', {color: '#ddeeff'}, 'fast');
+        $('.action-bar').effect('highlight', {color: '#6d6d6d'}, 'fast');
         notifyPlayerOfState();
     }
 });
@@ -939,7 +939,7 @@ function animateHistory(e) {
         el.effect('shake', {times: '5'}, 1000);
     } else {
         el.effect('slide', {direction: 'left'}, 400)
-            .effect('highlight', {color: '#ddeeff'}, 1000);
+            .effect('highlight', {color: '#535353'}, 1000);
     }
 }
 function sendGlobalMessage() {
