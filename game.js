@@ -934,7 +934,6 @@ module.exports = function createGame(options) {
                 // deck = shuffle(deck);
                 target.influence[idx].role = deck.pop();
                 addHistory('interrogate', curTurnHistGroup(), '{%d} forced {%d} to exchange cards', playerIdx, state.state.target);
-                addHistory('interrogate', curTurnHistGroup(), '{%d} forced {%d} to exchange cards', playerIdx, deck);
             }
             else 
             {
@@ -943,6 +942,13 @@ module.exports = function createGame(options) {
             nextTurn();
 
         } 
+        // else if (command.command == 'contessa') 
+        // {
+
+            
+        //     nextTurn();
+
+        // } 
         else 
         {
             throw new GameException('Unknown command');
@@ -1286,13 +1292,17 @@ module.exports = function createGame(options) {
             target = state.players[actionState.target];
             addHistory('contessa', curTurnHistGroup(), '{%d} contessaed 2 coins to {%d}', playerIdx, actionState.target);
             target.cash += 2;
+
         }
-        else if (actionState.action == 'exchange') {
+        else if (actionState.action == 'exchange') 
+        {
             var exchangeOptions = [deck.pop()].concat(getInfluence(playerState));
-            if (state.roles.indexOf('ambassador') !== -1) {
+            if (state.roles.indexOf('ambassador') !== -1) 
+            {
                 // Ambassadors draw two cards; inquisitors draw one.
                 exchangeOptions.unshift(deck.pop());
             }
+
             setState({
                 name: stateNames.EXCHANGE,
                 playerIdx: state.state.playerIdx,
@@ -1300,9 +1310,14 @@ module.exports = function createGame(options) {
                 exchangeOptions: exchangeOptions
             });
             return false; // Not yet end of turn
-        } else if (actionState.action == 'interrogate') {
+        } 
+        else if (actionState.action == 'interrogate') 
+        {
             target = state.players[actionState.target];
             var influence = getInfluence(target);
+
+            // var revealOptions = [deck.pop()].concat(getInfluence(target));
+
             var confession = influence[rand(influence.length)];
             setState({
                 name: stateNames.INTERROGATE,
@@ -1312,12 +1327,16 @@ module.exports = function createGame(options) {
                 confession: confession
             });
             return false; // Not yet end of turn
-        } else if (actionState.action == 'change-your-team') {
+        } 
+        else if (actionState.action == 'change-your-team') 
+        {
             playerState.team *= -1;
             addHistory('change-your-team', curTurnHistGroup(), '{%d} changed to the %s team', playerIdx, getTeamName(playerState.team));
             state.treasuryReserve += 1;
             checkFreeForAll();
-        } else if (actionState.action == 'convert') {
+        } 
+        else if (actionState.action == 'convert') 
+        {
             target = state.players[actionState.target];
             target.team *= -1;
             addHistory('convert', curTurnHistGroup(), '{%d} converted {%d} to the %s team', playerIdx, actionState.target, getTeamName(target.team));

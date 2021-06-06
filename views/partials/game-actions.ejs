@@ -65,6 +65,8 @@
         <i class="exchange"></i>
         Waiting for <span data-bind="text: currentPlayerName()"></span> to exchange roles
     </div>
+
+
     <div data-bind="visible: weAreInState('exchange')">
         <i class="exchange"></i>
         Choose <span data-bind="text: ourInfluenceCount()"></span> roles to keep:<br/>
@@ -77,6 +79,7 @@
             <span>Exchange</span>
         </button>
     </div>
+
     <div data-bind="visible: theyAreInState('interrogate')">
         <i class="interrogate"></i>
         Waiting for <span data-bind="text: currentPlayerName()"></span> to interrogate <span data-bind="text: targetPlayerName()"></span>
