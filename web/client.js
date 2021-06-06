@@ -92,6 +92,7 @@ vm.state = ko.mapping.fromJS({
         message: null,
         exchangeOptions: null,
         playerToReveal: null,
+        playerToChoose: null,
         confession: null
     }
 });
@@ -477,6 +478,9 @@ function targetPlayerName() {
 function toRevealPlayerName() {
     return playerName(vm.state.state.playerToReveal());
 }
+function toChoosePlayerName() {
+    return playerName(vm.state.state.playerToChoose());
+}
 function winnerName() {
     return playerName(vm.state.state.winnerIdx());
 }
@@ -718,6 +722,12 @@ function weMustReveal() {
 }
 function theyMustReveal() {
     return vm.state.state.name() == states.REVEAL_INFLUENCE && vm.state.state.playerToReveal() != vm.state.playerIdx();
+}
+function weMustChoose() {
+    return vm.state.state.name() == states.CHOOSE_CARD && vm.state.state.playerToReveal() == vm.state.playerIdx();
+}
+function theyMustChoose() {
+    return vm.state.state.name() == states.CHOOSE_CARD && vm.state.state.playerToReveal() != vm.state.playerIdx();
 }
 function ourPlayer() {
     return getPlayer(vm.state.playerIdx());

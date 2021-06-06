@@ -70,6 +70,7 @@
         FINAL_ACTION_RESPONSE: 'final-action-response',
         BLOCK_RESPONSE: 'block-response',
         REVEAL_INFLUENCE: 'reveal-influence',
+        CHOOSE_CARD: 'choose-card',
         EXCHANGE: 'exchange',
         INTERROGATE: 'interrogate'
     };

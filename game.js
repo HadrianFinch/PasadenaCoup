@@ -796,7 +796,9 @@ module.exports = function createGame(options) {
                 throw new GameException('Incorrect state');
             }
 
-        } else if (command.command == 'reveal') {
+        } 
+        else if (command.command == 'reveal') 
+        {
             if (state.state.name != stateNames.REVEAL_INFLUENCE) {
                 throw new GameException('Incorrect state');
             }
@@ -828,7 +830,39 @@ module.exports = function createGame(options) {
             }
             throw new GameException('Could not reveal role');
 
-        } else if (command.command == 'block') {
+        }
+        else if (command.command == 'showCard') {
+            state.state.confession = command.role;
+
+            // for (i = 0; i < playerState.influence.length; i++) 
+            // {
+            //     var influence = playerState.influence[i];
+            //     if (influence.role == command.role && !influence.revealed) 
+            //     {
+            //         influence.revealed = true;
+            //         playerState.influenceCount--;
+            //         addHistory(state.state.reason, curTurnHistGroup(), '%s; {%d} lost a card.', state.state.message, playerIdx,);
+
+            //         if (state.state.reason == 'incorrect-challenge') {
+            //             if (afterIncorrectChallenge()) {
+            //                 nextTurn();
+            //             }
+            //         } else if (state.state.reason == 'successful-challenge') {
+            //             if (afterSuccessfulChallenge()) {
+            //                 nextTurn();
+            //             }
+            //         } else {
+            //             // The reveal is due to a coup or assassination.
+            //             nextTurn();
+            //         }
+            //         emitState();
+            //         return;
+            //     }
+            // }
+            // throw new GameException('Could not reveal role');
+
+        } 
+        else if (command.command == 'block') {
             if (playerState.influenceCount == 0) {
                 throw new GameException('Dead players cannot block');
             }
@@ -1317,14 +1351,22 @@ module.exports = function createGame(options) {
             var influence = getInfluence(target);
 
             // var revealOptions = [deck.pop()].concat(getInfluence(target));
+            setState({
+                name: stateNames.CHOOSE_CARD,
+                playerIdx: state.state.playerIdx,
+                action: actionState.action,
+                target: target,
+                reason: 'interrogate',
+                playerToChoose: playerIdx
+            });
 
-            var confession = influence[rand(influence.length)];
+            // var confession = influence[rand(influence.length)];
             setState({
                 name: stateNames.INTERROGATE,
                 playerIdx: state.state.playerIdx,
                 action: actionState.action,
                 target: state.state.target,
-                confession: confession
+                confession: state.state.confession
             });
             return false; // Not yet end of turn
         } 

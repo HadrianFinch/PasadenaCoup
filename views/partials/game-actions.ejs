@@ -66,7 +66,6 @@
         Waiting for <span data-bind="text: currentPlayerName()"></span> to exchange roles
     </div>
 
-
     <div data-bind="visible: weAreInState('exchange')">
         <i class="exchange"></i>
         Choose <span data-bind="text: ourInfluenceCount()"></span> roles to keep:<br/>
@@ -180,5 +179,17 @@
     <div data-bind="visible: theyMustReveal()">
         <span data-bind="text: stateMessage()"></span><br/><br/>
         Waiting for <span data-bind="text: toRevealPlayerName()"></span> to lose a card.
+    </div>
+
+    <div data-bind="visible: weMustChoose()">
+        <span data-bind="text: stateMessage()"></span><br/><br/>
+        You have been inquisited. You must choose a card to show.
+        <!-- ko foreach: ourInfluence() -->
+        <button class="btn" data-bind="text: role, css: buttonRoleClass(role()), visible: !revealed(), event: {vclick: reveal}"></button>
+        <!-- /ko -->
+    </div>
+    <div data-bind="visible: theyMustChoose()">
+        <span data-bind="text: stateMessage()"></span><br/><br/>
+        Waiting for <span data-bind="text: toChoosePlayerName()"></span> to choose a card.
     </div>
 </div>
